@@ -6,16 +6,21 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Configurable;
 
+import com.sayed.pizzawizza.service.PricingEngine;
+import com.sayed.pizzawizza.service.PricingEngineImpl;
+
 @Configurable("order")
 public class Order implements Serializable {
    private static final long serialVersionUID = 1L;
    private Customer customer;
    private List<Pizza> pizzas;
    private Payment payment;
+   private PricingEngine pricingEngine;
 
    public Order() {
       pizzas = new ArrayList<Pizza>();
       customer = new Customer();
+      pricingEngine = new PricingEngineImpl();
    }
 
    public Customer getCustomer() {
@@ -39,7 +44,7 @@ public class Order implements Serializable {
    }
 
    public float getTotal() {
-      return 0.0f;//pricingEngine.calculateOrderTotal(this);
+      return pricingEngine.calculateOrderTotal(this);
    }
 
    public Payment getPayment() {
